@@ -1,8 +1,10 @@
 import { readFileSync } from "fs";
 import { dateStringToDate } from "./utils";
 import { Result } from "./types";
+
+type MatchData = [Date, string, string, number, number, Result, string];
 class CsvFileReader {
-  public data: string[][] = [];
+  public data: MatchData[] = [];
 
   constructor(public fileName: string) {}
 
@@ -12,7 +14,7 @@ class CsvFileReader {
     })
       .split("\n")
       .map((row: string): string[] => row.split(","))
-      .map((row: string[]): any => {
+      .map((row: string[]): MatchData => {
         return [
           dateStringToDate(row[0]),
           row[1],
