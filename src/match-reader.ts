@@ -1,25 +1,35 @@
-import CsvFileReader from "./csv-file-reader";
 import { dateStringToDate } from "./utils";
+
+type MatchData = [Date, string, string, number, number, MatchResult, string];
 
 export enum MatchResult {
   HomeWin = "H",
   AwayWin = "A",
   Draw = "D",
 }
+interface DataReader {
+  read(): void;
+  data: string[][];
+}
 
-type MatchData = [Date, string, string, number, number, MatchResult, string];
+class MatchReader {
+  matches: MatchData[] = [];
 
-class MatchReader extends CsvFileReader<MatchData> {
-  convertRow(row: string[]): MatchData {
-    return [
-      dateStringToDate(row[0]),
-      row[1],
-      row[2],
-      parseInt(row[3]),
-      parseInt(row[4]),
-      row[5] as MatchResult,
-      row[6],
-    ];
+  constructor(public reader: DataReader) {}
+
+  public load(): void {
+    this.reader.read();
+    this.matches = this.reader.data.map((row: string[]): MatchData => {
+      return [
+        dateStringToDate(row[0]),
+        row[1],
+        row[2],
+        parseInt(row[3]),
+        parseInt(row[4]),
+        row[5] as MatchResult,
+        row[6],
+      ];
+    });
   }
 }
 
