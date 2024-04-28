@@ -1,12 +1,6 @@
+import { MatchData, MatchResult } from "./types";
 import { dateStringToDate } from "./utils";
 
-type MatchData = [Date, string, string, number, number, MatchResult, string];
-
-export enum MatchResult {
-  HomeWin = "H",
-  AwayWin = "A",
-  Draw = "D",
-}
 interface DataReader {
   read(): void;
   data: string[][];
