@@ -1,13 +1,12 @@
-import CsvFileReader from "./csv-file-reader";
-import { Result } from "./types";
+import MatchReader, { MatchResult } from "./match-reader";
 
-const reader = new CsvFileReader("data/football.csv");
-reader.read();
+const matchReader = new MatchReader("data/football.csv");
+matchReader.read();
 
-const manUnitedWins = reader.data.filter(
+const manUnitedWins = matchReader.data.filter(
   (match) =>
-    (match[1] === "Man United" && match[5] === Result.HomeWin) ||
-    (match[2] === "Man United" && match[5] === Result.AwayWin)
+    (match[1] === "Man United" && match[5] === MatchResult.HomeWin) ||
+    (match[2] === "Man United" && match[5] === MatchResult.AwayWin)
 );
-console.log(reader.data);
+console.log(matchReader.data);
 console.log("Man United wins: ", manUnitedWins.length);
